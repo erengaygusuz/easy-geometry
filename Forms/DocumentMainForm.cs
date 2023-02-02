@@ -1,39 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace EasyGeometry
 {
     public partial class DocumentMainForm : Form
     {
-        bool created = false;
-        IntPtr appWin;
+        private Process proc;
+        private bool created = false;
+        private IntPtr appWin;
 
-        private const int SWP_NOOWNERZORDER = 0x200;
-        private const int SWP_NOREDRAW = 0x8;
-        private const int SWP_NOZORDER = 0x4;
-        private const int SWP_SHOWWINDOW = 0x0040;
-        private const int WS_EX_MDICHILD = 0x40;
-        private const int SWP_FRAMECHANGED = 0x20;
-        private const int SWP_NOACTIVATE = 0x10;
-        private const int SWP_ASYNCWINDOWPOS = 0x4000;
-        private const int SWP_NOMOVE = 0x2;
-        private const int SWP_NOSIZE = 0x1;
         private const int GWL_STYLE = (-16);
         private const int WS_VISIBLE = 0x10000000;
-        private const int WM_CLOSE = 0x10;
-        private const int WS_CHILD = 0x40000000;
-
-        private string pdf = "E:\\ProjectFiles\\DesktopProjects\\easy-geometry\\konuanlatimi\\deltoit.pdf";
 
         [DllImport("user32.dll")]
         private static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
@@ -60,25 +41,20 @@ namespace EasyGeometry
 
         protected override void OnVisibleChanged(EventArgs e)
         {
-
-            // If control needs to be initialized/created
             if (created == false)
             {
-                // Mark that control is created
                 created = true;
 
-                // Initialize handle value to invalid
                 appWin = IntPtr.Zero;
 
-                // Start the remote application
-                Process proc = null;
+                proc = null;
+
                 try
                 {
-
                     proc = new Process();
 
-                    proc.StartInfo.FileName = "E:\\ProjectFiles\\DesktopProjects\\easy-geometry\\external\\sumatra-pdf\\sumatra-pdf.exe";
-                    proc.StartInfo.Arguments = pdf;
+                    proc.StartInfo.FileName = Application.StartupPath + "\\external\\sumatra-pdf\\sumatra-pdf.exe";
+                    proc.StartInfo.Arguments = Application.StartupPath + "\\data\\document\\" + DocumentTabControl.TabPages[DocumentTabControl.SelectedIndex].Name + ".pdf";
 
                     proc.Start();
 
@@ -90,17 +66,17 @@ namespace EasyGeometry
                         proc.Refresh();
                     }
 
-                    // Get the main handle
                     appWin = proc.MainWindowHandle;
                 }
+
                 catch (Exception ex)
                 {
                     MessageBox.Show(this, ex.Message, "Error");
                 }
 
-                SetParent(proc.MainWindowHandle, this.DocumentTabControl.TabPages[0].Handle);
-                SetWindowLong(proc.MainWindowHandle, GWL_STYLE, WS_VISIBLE);
-                MoveWindow(proc.MainWindowHandle, 0, -70, this.DocumentTabControl.TabPages[0].Width, this.DocumentTabControl.TabPages[0].Height + 70, true);
+                SetParent(appWin, this.DocumentTabControl.TabPages[DocumentTabControl.SelectedIndex].Handle);
+                SetWindowLong(appWin, GWL_STYLE, WS_VISIBLE);
+                MoveWindow(appWin, 0, -70, this.DocumentTabControl.TabPages[DocumentTabControl.SelectedIndex].Width, this.DocumentTabControl.TabPages[DocumentTabControl.SelectedIndex].Height + 70, true);
 
             }
 
@@ -128,8 +104,9 @@ namespace EasyGeometry
         {
             if (appWin != IntPtr.Zero)
             {
-                MoveWindow(appWin, 0, -70, this.DocumentTabControl.TabPages[0].Width, this.DocumentTabControl.TabPages[0].Height + 70, true);
+                MoveWindow(appWin, 0, -70, this.DocumentTabControl.TabPages[DocumentTabControl.SelectedIndex].Width, this.DocumentTabControl.TabPages[DocumentTabControl.SelectedIndex].Height + 70, true);
             }
+
             base.OnResize(e);
         }
 
@@ -137,9 +114,62 @@ namespace EasyGeometry
         {
             if (appWin != IntPtr.Zero)
             {
-                MoveWindow(appWin, 0, -70, this.DocumentTabControl.TabPages[0].Width, this.DocumentTabControl.TabPages[0].Height + 70, true);
+                MoveWindow(appWin, 0, -70, this.DocumentTabControl.TabPages[DocumentTabControl.SelectedIndex].Width, this.DocumentTabControl.TabPages[DocumentTabControl.SelectedIndex].Height + 70, true);
             }
+
             base.OnResize(e);
+        }
+
+        private void DocumentMainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            proc.Kill();
+            AppMainForm.isDocumentMainOpened = false;
+        }
+
+        private void DocumentTabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            created = false;
+
+            if (created == false)
+            {
+                created = true;
+
+                appWin = IntPtr.Zero;
+
+                proc.Kill();
+
+                try
+                {
+                    proc = new Process();
+
+                    proc.StartInfo.FileName = Application.StartupPath + "\\external\\sumatra-pdf\\sumatra-pdf.exe";
+                    proc.StartInfo.Arguments = Application.StartupPath + "\\data\\document\\" + DocumentTabControl.TabPages[DocumentTabControl.SelectedIndex].Name + ".pdf";
+
+                    proc = Process.Start(proc.StartInfo);
+
+                    proc.WaitForInputIdle();
+
+                    while (proc.MainWindowHandle == IntPtr.Zero)
+                    {
+                        Thread.Sleep(100);
+                        proc.Refresh();
+                    }
+
+                    appWin = proc.MainWindowHandle;
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show(this, ex.Message, "Error");
+                }
+
+                SetParent(appWin, this.DocumentTabControl.TabPages[DocumentTabControl.SelectedIndex].Handle);
+                SetWindowLong(appWin, GWL_STYLE, WS_VISIBLE);
+                MoveWindow(appWin, 0, -70, this.DocumentTabControl.TabPages[DocumentTabControl.SelectedIndex].Width, this.DocumentTabControl.TabPages[DocumentTabControl.SelectedIndex].Height + 70, true);
+
+            }
+
+            base.OnVisibleChanged(e);
         }
     }
 }

@@ -30,13 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppMainForm));
             this.AppMainTitle = new System.Windows.Forms.PictureBox();
-            this.ExitButton = new System.Windows.Forms.PictureBox();
             this.TestButton = new System.Windows.Forms.PictureBox();
             this.VideoButton = new System.Windows.Forms.PictureBox();
             this.DocumentButton = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.AppMainTitle)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ExitButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TestButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VideoButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DocumentButton)).BeginInit();
@@ -44,7 +42,7 @@
             // 
             // AppMainTitle
             // 
-            this.AppMainTitle.BackgroundImage = global::EasyGeometry.Properties.Resources.AppMainTitle;
+            this.AppMainTitle.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("AppMainTitle.BackgroundImage")));
             this.AppMainTitle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.AppMainTitle.Location = new System.Drawing.Point(185, 44);
             this.AppMainTitle.Name = "AppMainTitle";
@@ -52,21 +50,9 @@
             this.AppMainTitle.TabIndex = 8;
             this.AppMainTitle.TabStop = false;
             // 
-            // ExitButton
-            // 
-            this.ExitButton.BackgroundImage = global::EasyGeometry.Properties.Resources.ExitBtn;
-            this.ExitButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ExitButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ExitButton.Location = new System.Drawing.Point(817, 7);
-            this.ExitButton.Name = "ExitButton";
-            this.ExitButton.Size = new System.Drawing.Size(35, 35);
-            this.ExitButton.TabIndex = 7;
-            this.ExitButton.TabStop = false;
-            this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
-            // 
             // TestButton
             // 
-            this.TestButton.BackgroundImage = global::EasyGeometry.Properties.Resources.TestBtn;
+            this.TestButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("TestButton.BackgroundImage")));
             this.TestButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.TestButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.TestButton.Location = new System.Drawing.Point(599, 402);
@@ -78,7 +64,7 @@
             // 
             // VideoButton
             // 
-            this.VideoButton.BackgroundImage = global::EasyGeometry.Properties.Resources.VideoBtn;
+            this.VideoButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("VideoButton.BackgroundImage")));
             this.VideoButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.VideoButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.VideoButton.Location = new System.Drawing.Point(381, 407);
@@ -90,7 +76,7 @@
             // 
             // DocumentButton
             // 
-            this.DocumentButton.BackgroundImage = global::EasyGeometry.Properties.Resources.DocumentBtn;
+            this.DocumentButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("DocumentButton.BackgroundImage")));
             this.DocumentButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.DocumentButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.DocumentButton.Location = new System.Drawing.Point(128, 402);
@@ -118,17 +104,19 @@
             this.ClientSize = new System.Drawing.Size(859, 561);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.AppMainTitle);
-            this.Controls.Add(this.ExitButton);
             this.Controls.Add(this.TestButton);
             this.Controls.Add(this.VideoButton);
             this.Controls.Add(this.DocumentButton);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(879, 604);
+            this.MinimumSize = new System.Drawing.Size(879, 604);
             this.Name = "AppMainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "KOLAY GEOMETRİ";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.AppMainTitle)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ExitButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TestButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VideoButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DocumentButton)).EndInit();
@@ -137,13 +125,11 @@
         }
 
         #endregion
-
+        private System.Windows.Forms.PictureBox AppMainTitle;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox DocumentButton;
         private System.Windows.Forms.PictureBox VideoButton;
         private System.Windows.Forms.PictureBox TestButton;
-        private System.Windows.Forms.PictureBox ExitButton;
-        private System.Windows.Forms.PictureBox AppMainTitle;
-        private System.Windows.Forms.Label label1;
     }
 }
 

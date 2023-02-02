@@ -1,39 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace EasyGeometry
 {
     public partial class VideoMainForm : Form
     {
-        bool created = false;
-        IntPtr appWin;
+        private Process proc;
+        private bool created = false;
+        private IntPtr appWin;
 
-        private const int SWP_NOOWNERZORDER = 0x200;
-        private const int SWP_NOREDRAW = 0x8;
-        private const int SWP_NOZORDER = 0x4;
-        private const int SWP_SHOWWINDOW = 0x0040;
-        private const int WS_EX_MDICHILD = 0x40;
-        private const int SWP_FRAMECHANGED = 0x20;
-        private const int SWP_NOACTIVATE = 0x10;
-        private const int SWP_ASYNCWINDOWPOS = 0x4000;
-        private const int SWP_NOMOVE = 0x2;
-        private const int SWP_NOSIZE = 0x1;
         private const int GWL_STYLE = (-16);
         private const int WS_VISIBLE = 0x10000000;
-        private const int WM_CLOSE = 0x10;
-        private const int WS_CHILD = 0x40000000;
-
-        private string video = "E:\\ProjectFiles\\DesktopProjects\\easy-geometry\\konuanlatimi\\deltoid.mp4";
 
         [DllImport("user32.dll")]
         private static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
@@ -60,24 +41,20 @@ namespace EasyGeometry
 
         protected override void OnVisibleChanged(EventArgs e)
         {
-
-            // If control needs to be initialized/created
             if (created == false)
             {
-                // Mark that control is created
                 created = true;
 
-                // Initialize handle value to invalid
                 appWin = IntPtr.Zero;
 
-                // Start the remote application
-                Process proc = null;
+                proc = null;
+
                 try
                 {
                     proc = new Process();
 
-                    proc.StartInfo.FileName = "E:\\ProjectFiles\\DesktopProjects\\easy-geometry\\external\\mp-classic\\mpc-hc64.exe";
-                    proc.StartInfo.Arguments = video + " /open";
+                    proc.StartInfo.FileName = Application.StartupPath + "\\external\\mp-classic\\mpc-hc64.exe";
+                    proc.StartInfo.Arguments = Application.StartupPath + "\\data\\video\\" + VideoTabControl.TabPages[VideoTabControl.SelectedIndex].Name + ".mp4" +" /open";
 
                     proc.Start();
 
@@ -89,17 +66,17 @@ namespace EasyGeometry
                         proc.Refresh();
                     }
 
-                    // Get the main handle
                     appWin = proc.MainWindowHandle;
                 }
+
                 catch (Exception ex)
                 {
                     MessageBox.Show(this, ex.Message, "Error");
                 }
 
-                SetParent(proc.MainWindowHandle, this.VideoTabControl.TabPages[0].Handle);
+                SetParent(proc.MainWindowHandle, this.VideoTabControl.TabPages[VideoTabControl.SelectedIndex].Handle);
                 SetWindowLong(proc.MainWindowHandle, GWL_STYLE, WS_VISIBLE);
-                MoveWindow(proc.MainWindowHandle, 0, -70, this.VideoTabControl.TabPages[0].Width, this.VideoTabControl.TabPages[0].Height + 70, true);
+                MoveWindow(proc.MainWindowHandle, 0, -70, this.VideoTabControl.TabPages[VideoTabControl.SelectedIndex].Width, this.VideoTabControl.TabPages[VideoTabControl.SelectedIndex].Height + 70, true);
 
             }
 
@@ -108,8 +85,7 @@ namespace EasyGeometry
 
         private void VideoMainForm_Load(object sender, EventArgs e)
         {
-            //axWindowsMediaPlayer1.settings.autoStart = false;
-            //axWindowsMediaPlayer1.URL = video;
+            
         }
 
         private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
@@ -128,8 +104,9 @@ namespace EasyGeometry
         {
             if (appWin != IntPtr.Zero)
             {
-                MoveWindow(appWin, 0, -70, this.VideoTabControl.TabPages[0].Width, this.VideoTabControl.TabPages[0].Height + 70, true);
+                MoveWindow(appWin, 0, -70, this.VideoTabControl.TabPages[VideoTabControl.SelectedIndex].Width, this.VideoTabControl.TabPages[VideoTabControl.SelectedIndex].Height + 70, true);
             }
+
             base.OnResize(e);
         }
 
@@ -137,9 +114,62 @@ namespace EasyGeometry
         {
             if (appWin != IntPtr.Zero)
             {
-                MoveWindow(appWin, 0, -70, this.VideoTabControl.TabPages[0].Width, this.VideoTabControl.TabPages[0].Height + 70, true);
+                MoveWindow(appWin, 0, -70, this.VideoTabControl.TabPages[VideoTabControl.SelectedIndex].Width, this.VideoTabControl.TabPages[VideoTabControl.SelectedIndex].Height + 70, true);
             }
+
             base.OnResize(e);
+        }
+
+        private void VideoMainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            proc.Kill();
+            AppMainForm.isVideoMainOpened = false;
+        }
+
+        private void VideoTabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            created = false;
+
+            if (created == false)
+            {
+                created = true;
+
+                appWin = IntPtr.Zero;
+
+                proc.Kill();
+
+                try
+                {
+                    proc = new Process();
+
+                    proc.StartInfo.FileName = Application.StartupPath + "\\external\\mp-classic\\mpc-hc64.exe";
+                    proc.StartInfo.Arguments = Application.StartupPath + "\\data\\video\\" + VideoTabControl.TabPages[VideoTabControl.SelectedIndex].Name + ".mp4" + " /open";
+
+                    proc.Start();
+
+                    proc.WaitForInputIdle();
+
+                    while (proc.MainWindowHandle == IntPtr.Zero)
+                    {
+                        Thread.Sleep(100);
+                        proc.Refresh();
+                    }
+
+                    appWin = proc.MainWindowHandle;
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show(this, ex.Message, "Error");
+                }
+
+                SetParent(proc.MainWindowHandle, this.VideoTabControl.TabPages[VideoTabControl.SelectedIndex].Handle);
+                SetWindowLong(proc.MainWindowHandle, GWL_STYLE, WS_VISIBLE);
+                MoveWindow(proc.MainWindowHandle, 0, -70, this.VideoTabControl.TabPages[VideoTabControl.SelectedIndex].Width, this.VideoTabControl.TabPages[VideoTabControl.SelectedIndex].Height + 70, true);
+
+            }
+
+            base.OnVisibleChanged(e);
         }
     }
 }

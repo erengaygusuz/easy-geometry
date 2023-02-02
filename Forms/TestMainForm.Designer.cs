@@ -28,27 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TestMainForm));
             this.TestTabControl = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.dortgenler = new System.Windows.Forms.TabPage();
+            this.dikdortgenler = new System.Windows.Forms.TabPage();
+            this.eskenarDortgenler = new System.Windows.Forms.TabPage();
+            this.kare = new System.Windows.Forms.TabPage();
+            this.yamuk = new System.Windows.Forms.TabPage();
+            this.paralelkenar = new System.Windows.Forms.TabPage();
+            this.deltoid = new System.Windows.Forms.TabPage();
             this.TestTabControl.SuspendLayout();
             this.SuspendLayout();
             // 
             // TestTabControl
             // 
             this.TestTabControl.Alignment = System.Windows.Forms.TabAlignment.Right;
-            this.TestTabControl.Controls.Add(this.tabPage1);
-            this.TestTabControl.Controls.Add(this.tabPage2);
-            this.TestTabControl.Controls.Add(this.tabPage3);
-            this.TestTabControl.Controls.Add(this.tabPage4);
-            this.TestTabControl.Controls.Add(this.tabPage5);
-            this.TestTabControl.Controls.Add(this.tabPage6);
-            this.TestTabControl.Controls.Add(this.tabPage7);
+            this.TestTabControl.Controls.Add(this.dortgenler);
+            this.TestTabControl.Controls.Add(this.dikdortgenler);
+            this.TestTabControl.Controls.Add(this.eskenarDortgenler);
+            this.TestTabControl.Controls.Add(this.kare);
+            this.TestTabControl.Controls.Add(this.yamuk);
+            this.TestTabControl.Controls.Add(this.paralelkenar);
+            this.TestTabControl.Controls.Add(this.deltoid);
             this.TestTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TestTabControl.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.TestTabControl.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -61,71 +62,72 @@
             this.TestTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.TestTabControl.TabIndex = 0;
             this.TestTabControl.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabControl1_DrawItem);
+            this.TestTabControl.SelectedIndexChanged += new System.EventHandler(this.TestTabControl_SelectedIndexChanged);
             // 
-            // tabPage1
+            // dortgenler
             // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 4);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(701, 553);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Dörtgenler";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.dortgenler.Location = new System.Drawing.Point(4, 4);
+            this.dortgenler.Name = "dortgenler";
+            this.dortgenler.Padding = new System.Windows.Forms.Padding(3);
+            this.dortgenler.Size = new System.Drawing.Size(701, 553);
+            this.dortgenler.TabIndex = 0;
+            this.dortgenler.Text = "Dörtgenler";
+            this.dortgenler.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // dikdortgenler
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 4);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(701, 553);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Dikdörtgenler";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.dikdortgenler.Location = new System.Drawing.Point(4, 4);
+            this.dikdortgenler.Name = "dikdortgenler";
+            this.dikdortgenler.Padding = new System.Windows.Forms.Padding(3);
+            this.dikdortgenler.Size = new System.Drawing.Size(701, 553);
+            this.dikdortgenler.TabIndex = 1;
+            this.dikdortgenler.Text = "Dikdörtgenler";
+            this.dikdortgenler.UseVisualStyleBackColor = true;
             // 
-            // tabPage3
+            // eskenarDortgenler
             // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 4);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(701, 553);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Eşkenar Dörtgenler";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.eskenarDortgenler.Location = new System.Drawing.Point(4, 4);
+            this.eskenarDortgenler.Name = "eskenarDortgenler";
+            this.eskenarDortgenler.Size = new System.Drawing.Size(701, 553);
+            this.eskenarDortgenler.TabIndex = 2;
+            this.eskenarDortgenler.Text = "Eşkenar Dörtgenler";
+            this.eskenarDortgenler.UseVisualStyleBackColor = true;
             // 
-            // tabPage4
+            // kare
             // 
-            this.tabPage4.Location = new System.Drawing.Point(4, 4);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(701, 553);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Kare";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.kare.Location = new System.Drawing.Point(4, 4);
+            this.kare.Name = "kare";
+            this.kare.Size = new System.Drawing.Size(701, 553);
+            this.kare.TabIndex = 3;
+            this.kare.Text = "Kare";
+            this.kare.UseVisualStyleBackColor = true;
             // 
-            // tabPage5
+            // yamuk
             // 
-            this.tabPage5.Location = new System.Drawing.Point(4, 4);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(701, 553);
-            this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "Yamuk";
-            this.tabPage5.UseVisualStyleBackColor = true;
+            this.yamuk.Location = new System.Drawing.Point(4, 4);
+            this.yamuk.Name = "yamuk";
+            this.yamuk.Size = new System.Drawing.Size(701, 553);
+            this.yamuk.TabIndex = 4;
+            this.yamuk.Text = "Yamuk";
+            this.yamuk.UseVisualStyleBackColor = true;
             // 
-            // tabPage6
+            // paralelkenar
             // 
-            this.tabPage6.Location = new System.Drawing.Point(4, 4);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(701, 553);
-            this.tabPage6.TabIndex = 5;
-            this.tabPage6.Text = "Paralelkenar";
-            this.tabPage6.UseVisualStyleBackColor = true;
+            this.paralelkenar.Location = new System.Drawing.Point(4, 4);
+            this.paralelkenar.Name = "paralelkenar";
+            this.paralelkenar.Size = new System.Drawing.Size(701, 553);
+            this.paralelkenar.TabIndex = 5;
+            this.paralelkenar.Text = "Paralelkenar";
+            this.paralelkenar.UseVisualStyleBackColor = true;
             // 
-            // tabPage7
+            // deltoid
             // 
-            this.tabPage7.Location = new System.Drawing.Point(4, 4);
-            this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(701, 553);
-            this.tabPage7.TabIndex = 6;
-            this.tabPage7.Text = "Deltoid";
-            this.tabPage7.UseVisualStyleBackColor = true;
+            this.deltoid.Location = new System.Drawing.Point(4, 4);
+            this.deltoid.Name = "deltoid";
+            this.deltoid.Size = new System.Drawing.Size(701, 553);
+            this.deltoid.TabIndex = 6;
+            this.deltoid.Text = "Deltoid";
+            this.deltoid.UseVisualStyleBackColor = true;
             // 
             // TestMainForm
             // 
@@ -134,8 +136,10 @@
             this.BackColor = System.Drawing.Color.SkyBlue;
             this.ClientSize = new System.Drawing.Size(859, 561);
             this.Controls.Add(this.TestTabControl);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TestMainForm";
-            this.Text = "TestMainForm";
+            this.Text = "Testler";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TestMainForm_FormClosing);
             this.Load += new System.EventHandler(this.TestMainForm_Load);
             this.SizeChanged += new System.EventHandler(this.TestMainForm_SizeChanged);
             this.TestTabControl.ResumeLayout(false);
@@ -146,12 +150,12 @@
         #endregion
 
         private System.Windows.Forms.TabControl TestTabControl;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.TabPage tabPage6;
-        private System.Windows.Forms.TabPage tabPage7;
+        private System.Windows.Forms.TabPage dortgenler;
+        private System.Windows.Forms.TabPage dikdortgenler;
+        private System.Windows.Forms.TabPage eskenarDortgenler;
+        private System.Windows.Forms.TabPage kare;
+        private System.Windows.Forms.TabPage yamuk;
+        private System.Windows.Forms.TabPage paralelkenar;
+        private System.Windows.Forms.TabPage deltoid;
     }
 }
