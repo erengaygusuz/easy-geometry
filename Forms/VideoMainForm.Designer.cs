@@ -72,7 +72,7 @@
             this.VideoTabControl.Size = new System.Drawing.Size(859, 561);
             this.VideoTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.VideoTabControl.TabIndex = 0;
-            this.VideoTabControl.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabControl1_DrawItem);
+            this.VideoTabControl.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.VideoTabControl_DrawItem);
             this.VideoTabControl.SelectedIndexChanged += new System.EventHandler(this.VideoTabControl_SelectedIndexChanged);
             // 
             // dortgenler
@@ -167,7 +167,6 @@
             this.Name = "VideoMainForm";
             this.Text = "Videolar";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.VideoMainForm_FormClosing);
-            this.Load += new System.EventHandler(this.VideoMainForm_Load);
             this.SizeChanged += new System.EventHandler(this.VideoMainForm_SizeChanged);
             this.VideoTabControl.ResumeLayout(false);
             this.dikdortgenler.ResumeLayout(false);

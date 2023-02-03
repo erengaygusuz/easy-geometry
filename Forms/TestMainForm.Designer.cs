@@ -61,7 +61,7 @@
             this.TestTabControl.Size = new System.Drawing.Size(859, 561);
             this.TestTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.TestTabControl.TabIndex = 0;
-            this.TestTabControl.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabControl1_DrawItem);
+            this.TestTabControl.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.TestTabControl_DrawItem);
             this.TestTabControl.SelectedIndexChanged += new System.EventHandler(this.TestTabControl_SelectedIndexChanged);
             // 
             // dortgenler
@@ -140,7 +140,6 @@
             this.Name = "TestMainForm";
             this.Text = "Testler";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TestMainForm_FormClosing);
-            this.Load += new System.EventHandler(this.TestMainForm_Load);
             this.SizeChanged += new System.EventHandler(this.TestMainForm_SizeChanged);
             this.TestTabControl.ResumeLayout(false);
             this.ResumeLayout(false);

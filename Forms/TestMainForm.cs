@@ -1,36 +1,29 @@
-﻿using System;
-using System.Diagnostics;
+﻿using EasyGeometry.Helpers;
+using System;
 using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace EasyGeometry
 {
     public partial class TestMainForm : Form
     {
-        private Process proc;
-        private bool created = false;
-        private IntPtr appWin;
+        private ProcessHelper processHelper;
 
-        private const int GWL_STYLE = (-16);
-        private const int WS_VISIBLE = 0x10000000;
-
-        [DllImport("user32.dll")]
-        private static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
-
-        [DllImport("user32.dll")]
-        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, UInt32 dwNewLong);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern bool MoveWindow(IntPtr hwnd, int x, int y, int cx, int cy, bool repaint);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern long SetWindowPos(IntPtr hwnd, long hWndInsertAfter, long x, long y, long cx, long cy, long wFlags);
+        private string exeFilePathWithNameAndExtension;
+        private string arguments;
 
         public TestMainForm()
         {
+            processHelper = new ProcessHelper();
+
             InitializeComponent();
+
+            processHelper.ParentHandle = this.TestTabControl.TabPages[TestTabControl.SelectedIndex].Handle;
+
+            SetProcessWindowBounds();
+
+            exeFilePathWithNameAndExtension = Application.StartupPath + "\\external\\adobe-flash-player\\flashplayer_32_sa.exe";
+            arguments = Application.StartupPath + "\\data\\test\\" + this.TestTabControl.TabPages[TestTabControl.SelectedIndex].Name + ".swf";
         }
 
         protected override void OnSizeChanged(EventArgs e)
@@ -41,53 +34,12 @@ namespace EasyGeometry
 
         protected override void OnVisibleChanged(EventArgs e)
         {
-            if (created == false)
-            {
-                created = true;
-
-                appWin = IntPtr.Zero;
-
-                proc = null;
-
-                try
-                {
-                    proc = new Process();
-
-                    proc.StartInfo.FileName = Application.StartupPath + "\\external\\adobe-flash-player\\flashplayer_32_sa.exe";
-                    proc.StartInfo.Arguments = Application.StartupPath + "\\data\\test\\" + TestTabControl.TabPages[TestTabControl.SelectedIndex].Name + ".swf";
-
-                    proc.Start();
-
-                    proc.WaitForInputIdle();
-
-                    while (proc.MainWindowHandle == IntPtr.Zero)
-                    {
-                        Thread.Sleep(100);
-                        proc.Refresh();
-                    }
-
-                    appWin = proc.MainWindowHandle;
-                }
-
-                catch (Exception ex)
-                {
-                    MessageBox.Show(this, ex.Message, "Error");
-                }
-
-                SetParent(proc.MainWindowHandle, this.TestTabControl.TabPages[TestTabControl.SelectedIndex].Handle);
-                SetWindowLong(proc.MainWindowHandle, GWL_STYLE, WS_VISIBLE);
-                MoveWindow(proc.MainWindowHandle, 0, -20, this.TestTabControl.TabPages[TestTabControl.SelectedIndex].Width, this.TestTabControl.TabPages[TestTabControl.SelectedIndex].Height + 20, true);
-            }
+            processHelper.Start(exeFilePathWithNameAndExtension, arguments);
 
             base.OnVisibleChanged(e);
         }
 
-        private void TestMainForm_Load(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
+        private void TestTabControl_DrawItem(object sender, DrawItemEventArgs e)
         {
             var g = e.Graphics;
             var text = this.TestTabControl.TabPages[e.Index].Text;
@@ -101,71 +53,44 @@ namespace EasyGeometry
 
         protected override void OnResize(EventArgs e)
         {
-            if (appWin != IntPtr.Zero)
-            {
-                MoveWindow(appWin, 0, -70, this.TestTabControl.TabPages[TestTabControl.SelectedIndex].Width, this.TestTabControl.TabPages[TestTabControl.SelectedIndex].Height + 70, true);
-            }
+            SetProcessWindowBounds();
+            processHelper.ChildWindowResize();
+
             base.OnResize(e);
         }
 
         private void TestMainForm_SizeChanged(object sender, EventArgs e)
         {
-            if (appWin != IntPtr.Zero)
-            {
-                MoveWindow(appWin, 0, -20, this.TestTabControl.TabPages[TestTabControl.SelectedIndex].Width, this.TestTabControl.TabPages[TestTabControl.SelectedIndex].Height + 20, true);
-            }
+            SetProcessWindowBounds();
+            processHelper.ChildWindowResize();
+
             base.OnResize(e);
         }
 
         private void TestMainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            proc.Kill();
+            processHelper.Process.Kill();
             AppMainForm.isTestMainOpened = false;
         }
 
         private void TestTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            created = false;
+            processHelper.ParentHandle = this.TestTabControl.TabPages[TestTabControl.SelectedIndex].Handle;
+            arguments = Application.StartupPath + "\\data\\test\\" + this.TestTabControl.TabPages[TestTabControl.SelectedIndex].Name + ".swf";
 
-            if (created == false)
-            {
-                created = true;
+            processHelper.Created = false;
 
-                appWin = IntPtr.Zero;
-
-                proc.Kill();
-
-                try
-                {
-                    proc = new Process();
-
-                    proc.StartInfo.FileName = Application.StartupPath + "\\external\\adobe-flash-player\\flashplayer_32_sa.exe";
-                    proc.StartInfo.Arguments = Application.StartupPath + "\\data\\test\\" + TestTabControl.TabPages[TestTabControl.SelectedIndex].Name + ".swf";
-
-                    proc = Process.Start(proc.StartInfo);
-
-                    proc.WaitForInputIdle();
-
-                    while (proc.MainWindowHandle == IntPtr.Zero)
-                    {
-                        Thread.Sleep(100);
-                        proc.Refresh();
-                    }
-
-                    appWin = proc.MainWindowHandle;                    
-                }
-
-                catch (Exception ex)
-                {
-                    MessageBox.Show(this, ex.Message, "Error");
-                }
-
-                SetParent(proc.MainWindowHandle, this.TestTabControl.TabPages[TestTabControl.SelectedIndex].Handle);
-                SetWindowLong(proc.MainWindowHandle, GWL_STYLE, WS_VISIBLE);
-                MoveWindow(proc.MainWindowHandle, 0, -20, this.TestTabControl.TabPages[TestTabControl.SelectedIndex].Width, this.TestTabControl.TabPages[TestTabControl.SelectedIndex].Height + 20, true);
-            }
+            processHelper.Start(exeFilePathWithNameAndExtension, arguments);
 
             base.OnVisibleChanged(e);
+        }
+    
+        private void SetProcessWindowBounds()
+        {
+            processHelper.SetWindowsXPos = 0;
+            processHelper.SetWindowsYPos = -20;
+            processHelper.SetWindowsWidth = this.TestTabControl.TabPages[TestTabControl.SelectedIndex].Width;
+            processHelper.SetWindowsHeight = this.TestTabControl.TabPages[TestTabControl.SelectedIndex].Height + 20;
         }
     }
 }

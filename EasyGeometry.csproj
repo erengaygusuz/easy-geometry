@@ -89,6 +89,7 @@
     <Compile Include="Forms\DocumentMainForm.Designer.cs">
       <DependentUpon>DocumentMainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ProcessHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Forms\TestMainForm.cs">

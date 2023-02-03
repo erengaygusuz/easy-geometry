@@ -62,7 +62,7 @@
             this.DocumentTabControl.Size = new System.Drawing.Size(859, 561);
             this.DocumentTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.DocumentTabControl.TabIndex = 0;
-            this.DocumentTabControl.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabControl1_DrawItem);
+            this.DocumentTabControl.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.DocumentTabControl_DrawItem);
             this.DocumentTabControl.SelectedIndexChanged += new System.EventHandler(this.DocumentTabControl_SelectedIndexChanged);
             // 
             // dortgenler
@@ -160,7 +160,6 @@
             this.Name = "DocumentMainForm";
             this.Text = "Dökümanlar";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DocumentMainForm_FormClosing);
-            this.Load += new System.EventHandler(this.DocumentMainForm_Load);
             this.SizeChanged += new System.EventHandler(this.DocumentMainForm_SizeChanged);
             this.DocumentTabControl.ResumeLayout(false);
             this.ResumeLayout(false);
