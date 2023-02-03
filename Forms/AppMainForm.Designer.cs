@@ -115,7 +115,6 @@
             this.Name = "AppMainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "KOLAY GEOMETRİ";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.AppMainTitle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TestButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VideoButton)).EndInit();

@@ -88,7 +88,12 @@ namespace EasyGeometry.Helpers
                     process = new Process();
 
                     process.StartInfo.FileName = exeFilePathWithNameAndExtension; 
-                    process.StartInfo.Arguments = arguments; 
+                    process.StartInfo.Arguments = arguments;
+
+                    process.Exited += (s, evt) => {
+
+                        process?.Dispose();
+                    };
 
                     process.Start();
 

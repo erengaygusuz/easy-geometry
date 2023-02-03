@@ -1,9 +1,6 @@
 ﻿using EasyGeometry.Helpers;
 using System;
-using System.Diagnostics;
 using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace EasyGeometry
@@ -26,7 +23,7 @@ namespace EasyGeometry
             SetProcessWindowBounds();
 
             exeFilePathWithNameAndExtension = Application.StartupPath + "\\external\\mp-classic\\mpc-hc64.exe";
-            arguments = Application.StartupPath + "\\data\\video\\" + VideoTabControl.TabPages[VideoTabControl.SelectedIndex].Name + ".mp4" + " /open";
+            arguments = Application.StartupPath + "\\data\\video\\" + this.VideoTabControl.TabPages[VideoTabControl.SelectedIndex].Name + ".mp4" + " /open";
         }
 
         protected override void OnSizeChanged(EventArgs e)
@@ -79,7 +76,7 @@ namespace EasyGeometry
         private void VideoTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             processHelper.ParentHandle = this.VideoTabControl.TabPages[VideoTabControl.SelectedIndex].Handle;
-            arguments = Application.StartupPath + "\\data\\video\\" + VideoTabControl.TabPages[VideoTabControl.SelectedIndex].Name + ".mp4" + " /open";
+            arguments = Application.StartupPath + "\\data\\video\\" + this.VideoTabControl.TabPages[VideoTabControl.SelectedIndex].Name + ".mp4" + " /open";
 
             processHelper.Created = false;
 

@@ -23,7 +23,7 @@ namespace EasyGeometry
             SetProcessWindowBounds();
 
             exeFilePathWithNameAndExtension = Application.StartupPath + "\\external\\sumatra-pdf\\sumatra-pdf.exe";
-            arguments = Application.StartupPath + "\\data\\document\\" + DocumentTabControl.TabPages[DocumentTabControl.SelectedIndex].Name + ".pdf";
+            arguments = Application.StartupPath + "\\data\\document\\" + this.DocumentTabControl.TabPages[DocumentTabControl.SelectedIndex].Name + ".pdf";
         }
 
         protected override void OnSizeChanged(EventArgs e)
@@ -78,7 +78,7 @@ namespace EasyGeometry
         private void DocumentTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             processHelper.ParentHandle = this.DocumentTabControl.TabPages[DocumentTabControl.SelectedIndex].Handle;
-            arguments = Application.StartupPath + "\\data\\document\\" + DocumentTabControl.TabPages[DocumentTabControl.SelectedIndex].Name + ".pdf";
+            arguments = Application.StartupPath + "\\data\\document\\" + this.DocumentTabControl.TabPages[DocumentTabControl.SelectedIndex].Name + ".pdf";
 
             processHelper.Created = false;
 
